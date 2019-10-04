@@ -1,5 +1,16 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
+import csv
+
+
+class City:
+    def __init__(self, name, lat, lon):
+        self.name = name
+        self.lat = lat
+        self.lon = lon
+
+    # def __str__(self):
+    #     return f'Name: {self.name}, lat: {self.lat}, lon: {self.lon}'
 
 
 # We have a collection of US cities with population over 750,000 stored in the
@@ -15,13 +26,24 @@
 # Note that the first line of the CSV is header that describes the fields--this
 # should not be loaded into a City object.
 cities = []
-#
 
 
 def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the
   # `cities` list
+    with open('cities.csv') as csvfile:
+        data = csv.reader(csvfile)
+        for row in data:
+            # create new city obj for each thing in the file
+            # don't want the first rows
+            if row[0] == 'city':
+                pass
+            else:
+              # change the lat an lon to floats beacuse that's waht test wants
+                new_city = City(row[0], float(row[3]), float(row[4]))
+                # add to list citites
+                cities.append(new_city)
 
     return cities
 
@@ -30,7 +52,9 @@ cityreader(cities)
 
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
-    print(c)
+    print(c.name, c.lat, c.lon)
+
+# print(City("Seattle", 47.6217, -122.3238), 'what it expects')
 
 # STRETCH GOAL!
 #
